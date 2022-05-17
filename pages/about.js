@@ -6,7 +6,7 @@ export default function AboutPage() {
             <h1>About</h1>
             <h2>
             <Link href="/">
-            <a>Back to home</a>
+            <a>Back to homepage</a>
             </Link>
             </h2>
         </>
