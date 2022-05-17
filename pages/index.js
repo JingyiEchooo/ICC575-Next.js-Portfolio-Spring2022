@@ -6,16 +6,23 @@ import Container from '../components/Container'
 import Col from '../components/Col'
 import Row from '../components/Row'
 import Layout from '../components/Layout'
-import Button from '../components/Button'
 import Heading from '../components/Heading'
 import Paragraph from '../components/Paragraph'
-
-
+import { getProjects } from '../lib/api'
 //import ProjectsByGenre from '../components/ProjectsByGenre'
 
-export default function Home() {
-  return (
+export async function getStaticProps() {
+  const items = await getProjects();
 
+  return {
+    props: {
+        items
+      }
+  }
+}
+
+export default function Home( {items} ) {
+  return (
       <Layout>
       <Head>
         <title>Echooo Portfolio</title>
@@ -43,7 +50,7 @@ export default function Home() {
                   </Paragraph>
           </Col>
           <Col xs="12" sm="6" md="4">
-              <Image 
+          <Image 
               src="/images/02.jpg"
               alt="Rocky coast landscape"
               width={1500}
@@ -77,12 +84,57 @@ export default function Home() {
                   </Paragraph>
           </Col>
         </Row>
+  {/*
+        <Heading level="2">Data array powered projects</Heading>
+			 <Row>
+			 {items.map((item, index) => {
+					const { title, image, slug} = item;
+				 return <Col key={index} xs="12" sm="6" md="4">
+					 <Image
+						 src={`/images/${image}`}
+						 alt={title}
+						 width={1500}
+						 height={1000}
+						 layout="responsive"
+					 />
+					 <Heading level="3">{title}</Heading>
+					 <Paragraph>
+						 <Link href={`/projects/${slug}`}>
+							 <a>
+								 View project
+							 </a>
+						 </Link>
+					 </Paragraph>
+				 </Col>
+			 })}
+			</Row>
+    */}
+
+      <Heading level="2">Data array powered projects</Heading>
+			  <Row>
+				  {items.map((item, index) => {
+					  const { title, image, slug } = item;
+				 return <Col key={index} xs="12" sm="6" md="4">
+					 <Image
+						 src={`/images/${image}`}
+						 alt={title}
+						 width={1500}
+						 height={1000}
+						 layout="responsive"
+						  />
+						  <Heading level="3">{title}</Heading>
+						  <Paragraph>
+							  <Link href={`/projects/${slug}`}>
+								  <a>
+									  View project
+								  </a>
+							  </Link>
+						  </Paragraph>
+					  </Col>
+				  })}
+			  </Row>
       </Container>
 
-
-      <footer> 
-        copyright here.
-      </footer>
       </Layout>
   )
 }
